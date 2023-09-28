@@ -1,0 +1,19 @@
+﻿﻿@using PhoneContactListAden.Models;
+@model Contact
+
+
+@{
+    ViewBag.Title = "Remove Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Confirm Deletion</h2>
+<h3>@Model.Name (@Model.PhoneNumber)</h3>
+
+<form asp-action="Remove" method="post">
+    <input type="hidden" asp-for="ContactId" />
+
+    <button type="submit" class="btn btn-primary">Remove</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">Cancel</a>
+</form>
