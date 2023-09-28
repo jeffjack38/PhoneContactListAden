@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhoneContactListAden.Models;
-using System.Diagnostics;
 
 namespace PhoneContactListAden.Controllers
 {
@@ -8,14 +7,17 @@ namespace PhoneContactListAden.Controllers
     {
         private ContactContext context { get; set; }
 
-        public HomeController(ContactContext cxt)
-        {
-            context = cxt;
-        }
-
+        public HomeController(ContactContext ctx) =>
+            context = ctx;
         public IActionResult Index()
         {
-            var contacts = context.Contacts.OrderBy(m => m.Name).ToList();
+            var contacts = context.Contacts.OrderBy(
+                c => c.Name).ToList();
+            return View(contacts);
+        }
+
+        public IActionResult About()
+        {
             return View();
         }
     }

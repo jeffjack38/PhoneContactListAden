@@ -4,9 +4,13 @@
 
 @{
     ViewBag.Title = "My Contacts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+<div class="mb-2">
+    <a asp-controller="Contact" asp-action="Add">Add New Contact</a>
+</div>
+<div class="container">
 <h2>Contact List</h2>
 <table class="table table-bordered table-striped">
     <thead>
@@ -25,17 +29,19 @@
                 <td>@contact.PhoneNumber</td>
                 <td>@contact.Address</td>
                 <td>@contact.Note</td>
+                <th>Actions</th>
                 <td>
-                    <a asp-controller="Contact" asp-action="Add"
-                       asp-rout-id="@contact.ContactId"
-                       asp-rout-slug="@contact.Slug"
-                       class="btn btn-primary">Add</a>
+                    <a asp-controller="Contact" asp-action="Edit"
+                        asp-route-id="@contact.ContactId"
+                        asp-rout-slug="@contact.Slug"
+                        class="btn btn-primary">Edit</a>
                     <a asp-controller="Contact" asp-action="Remove"
                        asp-route-id="@contact.ContactId"
                        asp-route-slug="@contact.Slug"
-                       class="btn btn-primary">Remove</a>
+                       class="btn btn-danger">Remove</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</div>

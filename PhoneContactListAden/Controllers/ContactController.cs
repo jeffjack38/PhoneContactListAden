@@ -1,31 +1,68 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhoneContactListAden.Models;
-using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
 
 namespace PhoneContactListAden.Controllers
 {
     public class ContactController : Controller
     {
-        
-        private readonly ILogger<HomeController> _logger;   
         private ContactContext context {  get; set; }
 
-        public ContactController(ILogger<HomeController> logger, ContactContext context)
+        public ContactController(ContactContext ctx) => context = ctx;
+
+        [HttpGet]
+        public IActionResult Add()
         {
-            _logger = logger;
-            this.context = context;
+            ViewBag.Action = "Add";
+            return View("Edit", new Contact());
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            var contacts = context.Contacts
-                .OrderBy(m => m.Name)
-                .ToList();
-
-            return View(contacts);
+            ViewBag.Action = "Edit";
+            var contact = context.Contacts.Find(id);
+            return View(contact);
         }
 
+        [HttpPost]
+        public IActionResult Edit(Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+                if (contact.ContactId == 0) 
+                    context.Contacts.Add(contact);
+                else
+                    context.Contacts.Update(contact);
+                context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            } else
+            {
+                ViewBag.Action =
+                    (contact.ContactId == 0) ? "Add" : "Edit";
+                return View(contact);   
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Remove(int id)
+        {
+            var contact = context.Contacts.Find(id);
+            return View(contact);
+        }
+
+        [HttpPost]
+        public IActionResult Remove(Contact contact)
+        {
+            context.Contacts.Remove(contact);
+            context.SaveChanges();
+            return RedirectToAction("Index", "Home");   
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
 
     }
+
 }

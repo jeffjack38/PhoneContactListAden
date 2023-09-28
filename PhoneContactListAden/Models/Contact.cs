@@ -23,6 +23,7 @@ namespace PhoneContactListAden.Models
         public string? Note { get; set; }
 
         public string Slug =>
-            Name?.Replace(' ', '-').ToLower();
+            Name?.Replace(' ', '-').ToLower() + '-' + PhoneNumber?.Replace(" ", "-");
+
     }
 }

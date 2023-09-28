@@ -10,7 +10,16 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContactContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ContactContext")));
 
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.AppendTrailingSlash = true;
+});
+
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -28,7 +37,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "Static",
+    pattern: "{controller=Contact}/{action}/Page/{num}");
+
+app.MapControllerRoute(
+    name: "About",
+    pattern: "{controller=Home}/{action}/Page/{num}");
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Contact}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}/{slug?}");
 
 app.Run();

@@ -4,6 +4,7 @@
 @{
     string title = ViewBag.Action + " Contact";
     ViewBag.Ttile = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
@@ -35,5 +36,5 @@
     <input type="hidden" asp-for="ContactId" />
 
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
-    <a asp-controller="Contact" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
 </form>
